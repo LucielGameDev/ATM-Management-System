@@ -1,0 +1,25 @@
+# Python
+__pycache__/
+*.py[cod]
+
+# Virtual environments
+venv/
+.env/
+
+# IDE
+.vscode/
+.idea/
+
+# Logs
+logs/
+*.log
+
+# Runtime ATM data
+data/users.txt
+data/accounts.txt
+data/transactions.txt
+data/audit_log.txt
+
+# OS
+.DS_Store
+Thumbs.db
