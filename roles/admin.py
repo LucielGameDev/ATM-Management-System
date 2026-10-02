@@ -80,4 +80,4 @@ class Admin(User):
                 return
 
             else:
-                print("Invalid option. Please enter a number from 1 to 9.")
+                print("ERROR! Invalid option. Please enter a number from 1 to 9.")

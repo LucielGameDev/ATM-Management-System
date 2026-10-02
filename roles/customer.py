@@ -61,4 +61,4 @@ class Customer(User):
                 exit()
 
             else:
-                print("Invalid option. Please enter a number from 1 to 7.")
+                print("ERROR! Invalid option. Please enter a number from 1 to 7.")
