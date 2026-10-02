@@ -29,7 +29,6 @@ class Technician(User):
     def refill_atm_cash(self):
         print("Refill ATM Cash.")
 
-    #Create Service:
     def menu(self):
         while True:
             print("\n===== Technician Menu =====")

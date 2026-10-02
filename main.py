@@ -1,8 +1,9 @@
-from roles.customer import Customer
-from roles.admin import Admin
-from roles.technician import Technician
+from atm_services.authentication import AuthenticationService
 
+#Main Menu:
 def main():
+    authentication_service = AuthenticationService()
+
     while True:
         print("\n===== ATM Management System =====")
         print("1. Customer")
@@ -13,16 +14,13 @@ def main():
         option = input("\nSelect an option from the menu above: ")
 
         if option == "1":
-            customer = Customer()
-            customer.menu()
+            login_customer(authentication_service)
 
         elif option == "2":
-            admin = Admin()
-            admin.menu()
+            login_admin(authentication_service)
 
         elif option == "3":
-            technician = Technician()
-            technician.menu()
+            login_technician(authentication_service)
 
         elif option == "4":
             print("Thank you for using the ATM Management System.")
@@ -30,6 +28,48 @@ def main():
 
         else:
             print("ERROR! Invalid option. Please enter a number from 1 to 4.")
+
+
+def login_customer(authentication_service):
+    print("\n===== Customer Login =====")
+
+    user_id = input("Enter User ID: ")
+    password = input("Enter Password: ")
+
+    success, message, customer = (authentication_service.authenticate_customer(user_id, password))
+
+    print(f"\n{message}")
+
+    if success:
+        customer.menu()
+
+
+def login_admin(authentication_service):
+    print("\n===== Admin Login =====")
+
+    user_id = input("Enter User ID: ")
+    password = input("Enter Password: ")
+
+    success, message, admin = (authentication_service.authenticate_admin(user_id, password))
+
+    print(f"\n{message}")
+
+    if success:
+        admin.menu()
+
+
+def login_technician(authentication_service):
+    print("\n===== Technician Login =====")
+
+    user_id = input("Enter User ID: ")
+    password = input("Enter Password: ")
+
+    success, message, technician = (authentication_service.authenticate_technician(user_id, password))
+
+    print(f"\n{message}")
+
+    if success:
+        technician.menu()
 
 
 if __name__ == "__main__":

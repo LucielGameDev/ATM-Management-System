@@ -2,8 +2,13 @@ from roles.user import User
 
 class Customer(User):
 
-    def __init__(self, user_id, username, password):
+    def __init__(self, user_id, username, password, account_number, account_balance, account_status):
+
         super().__init__(user_id, username, password)
+
+        self.account_number = account_number
+        self.account_balance = account_balance
+        self.account_status = account_status
 
     #Create Service:
     def balance_inquiry(self):
@@ -34,7 +39,6 @@ class Customer(User):
             print("4. Password Change")
             print("5. Transfer Funds")
             print("6. Back to Main Menu")
-            print("7. Exit")
 
             option = input("\nSelect an option from the menu above: ")
 
@@ -56,9 +60,5 @@ class Customer(User):
             elif option == "6":
                 return
 
-            elif option == "7":
-                print("Thank you for using the ATM Management System.")
-                exit()
-
             else:
-                print("ERROR! Invalid option. Please enter a number from 1 to 7.")
+                print("ERROR! Invalid option. Please enter a number from 1 to 6.")
