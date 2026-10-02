@@ -2,8 +2,8 @@ from roles.user import User
 
 class Technician(User):
 
-    def __init__(self, account_number, password):
-        super().__init__(account_number, password, "Technician")
+    def __init__(self, user_id, username, password):
+        super().__init__(user_id, username, password)
 
     #Create Service:
     def view_atm_health(self):

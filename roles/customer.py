@@ -2,8 +2,8 @@ from roles.user import User
 
 class Customer(User):
 
-    def __init__(self, account_number, password):
-        super().__init__(account_number, password, "Customer")
+    def __init__(self, user_id, username, password):
+        super().__init__(user_id, username, password)
 
     #Create Service:
     def balance_inquiry(self):
