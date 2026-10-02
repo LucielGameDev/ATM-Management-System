@@ -1,0 +1,1 @@
+atm_id,software_version,last_maintenance_date,atm_status,cash_level

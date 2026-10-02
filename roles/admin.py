@@ -18,16 +18,12 @@ class Admin(User):
         print("Modify Customer Information.")
 
     #Create Service:
-    def view_customer_accounts(self):
-        print("View Customer Accounts.")
+    def view_customer_account_info(self):
+        print("View Customer Account Information.")
 
     #Create Service:
-    def freeze_customer_account(self):
-        print("Freeze Customer Account.")
-
-    #Create Service:
-    def unfreeze_customer_account(self):
-        print("Unfreeze Customer Account.")
+    def change_customer_account_status(self):
+        print("Change Customer Account Status.")
 
     #Create Service:
     def view_customer_transactions(self):
@@ -43,12 +39,11 @@ class Admin(User):
             print("1. Create Customer Account")
             print("2. Delete Customer Account")
             print("3. Modify Customer Information")
-            print("4. View Customer Accounts")
-            print("5. Freeze Customer Account")
-            print("6. Unfreeze Customer Account")
-            print("7. View Customer Transactions History")
-            print("8. View Transactions Logs")
-            print("9. Back to Main Menu")
+            print("4. View Customer Account Information")
+            print("5. Change Customer Account Status")
+            print("6. View Customer Transactions History")
+            print("7. View Transactions Logs")
+            print("8. Back to Main Menu")
 
             option = input("\nSelect an option from the menu above: ")
 
@@ -62,22 +57,19 @@ class Admin(User):
                 self.modify_customer_information()
 
             elif option == "4":
-                self.view_customer_accounts()
+                self.view_customer_account_info()
 
             elif option == "5":
-                self.freeze_customer_account()
+                self.change_customer_account_status()
 
             elif option == "6":
-                self.unfreeze_customer_account()
-
-            elif option == "7":
                 self.view_customer_transactions()
 
-            elif option == "8":
+            elif option == "7":
                 self.view_transaction_logs()
 
-            elif option == "9":
+            elif option == "8":
                 return
 
             else:
-                print("ERROR! Invalid option. Please enter a number from 1 to 9.")
+                print("ERROR! Invalid option. Please enter a number from 1 to 8.")
