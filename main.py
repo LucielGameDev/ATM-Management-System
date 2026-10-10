@@ -1,8 +1,15 @@
+from data_manager import DataManager
 from atm_services.authentication import AuthenticationService
 
 #Main Menu:
 def main():
-    authentication_service = AuthenticationService()
+
+    #Initialize and load the application's data:
+    data_manager = DataManager()
+    data_manager.load_data()
+
+    #Initialize the authentication service:
+    authentication_service = AuthenticationService(data_manager)
 
     while True:
         print("\n===== ATM Management System =====")

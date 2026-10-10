@@ -27,4 +27,5 @@ Thumbs.db
 # Data files
 data/atm_config.txt
 data/costumers.txt
-data/transactions.txt
+data/technicians.txt
+data/admins.txt

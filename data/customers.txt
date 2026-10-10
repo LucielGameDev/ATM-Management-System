@@ -1,0 +1,2 @@
+C001,Alice,password123,ACC001,1000.00,Active
+C002,Bob,password456,ACC002,2000.00,Active
