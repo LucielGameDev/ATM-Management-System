@@ -53,7 +53,7 @@ class DataManager:
         #Load from atm_config.txt:
         self.atm_config = self._load_records(
             self.atm_config_file,
-            ["atm_id", "software_version", "last_maintenance_date", "atm_status", "cash_level"]
+            ["atm_id", "software_version", "last_maintenance_date", "scheduled_maintenance_date", "atm_status", "cash_level"]
         )
 
         atm_ids = [atm["atm_id"] for atm in self.atm_config]
@@ -135,7 +135,7 @@ class DataManager:
         self._save_records(
             self.atm_config_file,
             self.atm_config,
-            ["atm_id", "software_version", "last_maintenance_date", "atm_status", "cash_level"]
+            ["atm_id", "software_version", "last_maintenance_date", "scheduled_maintenance_date", "atm_status", "cash_level"]
         )
 
     #Write dictionaries to a CSV-style text file:
