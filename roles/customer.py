@@ -11,26 +11,58 @@ class Customer(User):
         self.account_status = account_status
 
     #Create Service:
-    def balance_inquiry(self):
-        print("Balance Inquiry.")
+    def balance_inquiry(self, customer_service):
+        
+        success, message, balance = (customer_service.balance_inquiry(self.user_id))
+        
+        print(message)
+
+        if success:
+            print(f"Current balance: ${balance:.2f}")
 
     #Create Service:
-    def withdrawal(self):
-        print("Withdrawal.")
+    def withdrawal(self, transaction_service):
+        
+        amount = input("Enter withdrawal amount: ").strip()
+
+        success, message = transaction_service.withdraw(self.account_number, amount)
+
+        print(message)
 
     #Create Service:
-    def deposit(self):
-        print("Deposit.")
+    def deposit(self, transaction_service):
+        
+        amount = input("Enter deposit amount: ").strip()
+
+        success, message = transaction_service.deposit(self.account_number, amount)
+
+        print(message)
 
     #Create Service:
-    def password_change(self):
-        print("Password Change.")
+    def change_customer_password(self, customer_service):
+        
+        current_password = input("Enter current password: ")
+        new_password = input("Enter new password: ")
+
+        success, message = (customer_service.change_customer_password(self.user_id, current_password, new_password))
+
+        print(message)
+
+        if success:
+            self.password = new_password
 
     #Create Service:
-    def transfer_funds(self):
-        print("Transfer Funds.")
+    def transfer_funds(self, transaction_service):
+        
+        receiver_account_number = input("Enter receiver's account number: ").strip()
 
-    def menu(self):
+        amount = input("Enter transfer amount: ").strip()
+
+        success, message = transaction_service.transfer_funds(self.account_number, receiver_account_number, amount)
+
+        print(message)
+
+    def menu(self, customer_service, transaction_service):
         while True:
             print("\n===== Customer Menu =====")
             print("1. Balance Inquiry")
@@ -40,24 +72,25 @@ class Customer(User):
             print("5. Transfer Funds")
             print("6. Back to Main Menu")
 
-            option = input("\nSelect an option from the menu above: ")
+            option = input("\nSelect an option from the menu above: ").strip()
 
             if option == "1":
-                self.balance_inquiry()
+                self.balance_inquiry(customer_service)
 
             elif option == "2":
-                self.withdrawal()
+                self.withdrawal(transaction_service)
 
             elif option == "3":
-                self.deposit()
+                self.deposit(transaction_service)
 
             elif option == "4":
-                self.password_change()
+                self.change_customer_password(customer_service)
 
             elif option == "5":
-                self.transfer_funds()
+                self.transfer_funds(transaction_service)
 
             elif option == "6":
+                print("Returning to the main menu...")
                 return
 
             else:
