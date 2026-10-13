@@ -16,6 +16,7 @@ class ATMService:
         health_report = {
             "atm_id": atm["atm_id"],
             "atm_status": atm["atm_status"],
+            "software_version": atm["software_version"],
             "last_maintenance_date": (
                 atm["last_maintenance_date"]
                 if atm["last_maintenance_date"]
@@ -26,7 +27,6 @@ class ATMService:
                 if atm["scheduled_maintenance_date"]
                 else "No maintenance scheduled"
                 ),
-            "software_version": atm["software_version"],
             "cash_level": atm["cash_level"]
         }
         
@@ -38,16 +38,16 @@ class ATMService:
         atm = self._find_atm(atm_id)
 
         if atm is None:
-            return (False, "ERROR! ATM not found.", None)
+            return (False, "ERROR! ATM not found.")
 
         #Validate the maintenance date format:
         try:
             scheduled_date = date.fromisoformat(maintenance_date)
         except (ValueError, TypeError):
-            return (False, "ERROR! Enter a valid date in YYYY-MM-DD format.", None)
+            return (False, "ERROR! Enter a valid date in YYYY-MM-DD format.")
 
         if scheduled_date < date.today():
-            return (False, "ERROR! Maintenance date cannot be in the past.", None)
+            return (False, "ERROR! Maintenance date cannot be in the past.")
 
         #Keep the old date in case saving fails:
         old_date = atm["scheduled_maintenance_date"]
@@ -61,9 +61,9 @@ class ATMService:
         except OSError:
             #Restore the old date if saving fails:
             atm["scheduled_maintenance_date"] = old_date
-            return (False, "ERROR! Could not save the maintenance schedule.", None)
+            return (False, "ERROR! Could not save the maintenance schedule.")
 
-        return (True, "ATM maintenance scheduled successfully.", None)
+        return (True, "ATM maintenance scheduled successfully.")
 
     #Technician Menu (3. Restart ATM Software):
     def restart_atm_software(self, atm_id):
@@ -71,7 +71,7 @@ class ATMService:
         atm = self._find_atm(atm_id)
 
         if atm is None:
-            return (False, "ERROR! ATM not found.", None)
+            return (False, "ERROR! ATM not found.")
 
         #Keep the old status in case saving fails:
         old_status = atm["atm_status"]
@@ -85,7 +85,7 @@ class ATMService:
         except OSError:
             #Restore the old status if saving fails:
             atm["atm_status"] = old_status
-            return (False, "ERROR! Could not save the ATM status.", None)
+            return (False, "ERROR! Could not save the ATM status.")
 
         #This is just a simulation; it does not restart physical hardware.
         #Update the ATM status in memory:
@@ -97,9 +97,9 @@ class ATMService:
         except OSError:
             #Restore the old status if saving fails:
             atm["atm_status"] = old_status
-            return (False, "ERROR! Restart simulation failed to save its final status.", None)
+            return (False, "ERROR! Restart simulation failed to save its final status.")
 
-        return (True, "ATM software restart simulated successfully.", None)
+        return (True, "ATM software restart simulated successfully.")
 
     #Technician Menu (4. Update ATM Software):
     def update_atm_software(self, atm_id, new_version):
@@ -107,11 +107,11 @@ class ATMService:
         atm = self._find_atm(atm_id)
 
         if atm is None:
-            return (False, "ERROR! ATM not found.", None)
+            return (False, "ERROR! ATM not found.")
 
         #Reject an empty string or a string containing only spaces:
         if not new_version or not new_version.strip():
-            return (False, "ERROR! Software version cannot be empty.", None)
+            return (False, "ERROR! Software version cannot be empty.")
 
         new_version = new_version.strip()
         
@@ -119,7 +119,7 @@ class ATMService:
         old_version = atm["software_version"]
 
         if new_version == old_version:
-            return (False, "ERROR! ATM is already using that software version.", None)
+            return (False, "ERROR! ATM is already using that software version.")
 
         #Update the software version in memory:
         atm["software_version"] = new_version
@@ -130,10 +130,10 @@ class ATMService:
         except OSError:
             #Restore the old version if saving fails:
             atm["software_version"] = old_version
-            return (False, "ERROR! Could not save the software version.", None)
+            return (False, "ERROR! Could not save the software version.")
 
         #This is just a simulation; no software is actually installed.
-        return (True, f"Software update simulated. Version is now {new_version}.", None)
+        return (True, f"Software update simulated. Version is now {new_version}.")
 
     #Technician Menu (5. Check ATM Cash Levels):
     def check_atm_cash_levels(self, atm_id):
@@ -157,17 +157,17 @@ class ATMService:
         atm = self._find_atm(atm_id)
 
         if atm is None:
-            return (False, "ERROR! ATM not found.", None)
+            return (False, "ERROR! ATM not found.")
 
         #Validate that the refill amount and current cash level are valid numbers:
         try:
             refill_amount = float(amount)
             current_cash = float(atm["cash_level"])
         except (ValueError, TypeError):
-            return (False, "ERROR! Cash amounts must be valid numbers.", None)
+            return (False, "ERROR! Cash amounts must be valid numbers.")
 
         if refill_amount <= 0:
-            return (False, "ERROR! Refill amount must be greater than zero.", None)
+            return (False, "ERROR! Refill amount must be greater than zero.")
 
         #Keep the old cash level in case saving fails:
         old_cash_level = atm["cash_level"]
@@ -182,9 +182,9 @@ class ATMService:
         except OSError:
             #Restore the old cash level if saving fails:
             atm["cash_level"] = old_cash_level
-            return (False, "ERROR! Could not save the updated cash level.", None)
+            return (False, "ERROR! Could not save the updated cash level.")
 
-        return (True, f"ATM refilled successfully. New cash level: "f"{new_cash_level:.2f}.", None)
+        return (True, f"ATM refilled successfully. New cash level: "f"{new_cash_level:.2f}.")
 
     #Find an ATM by its ID:
     def _find_atm(self, atm_id):

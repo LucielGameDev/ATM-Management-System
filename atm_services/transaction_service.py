@@ -73,7 +73,7 @@ class TransactionService:
             return (False, "ERROR! Customer not found.")
 
         if customer["account_status"].lower() == "frozen":
-            return False, "ERROR! Account is frozen."
+            return (False, "ERROR! Account is frozen.")
 
         try:
             current_balance = float(customer["account_balance"])
