@@ -5,7 +5,7 @@ class Admin(User):
     def __init__(self, user_id, username, password):
         super().__init__(user_id, username, password)
 
-    #Create Service:
+    #1. Create Customer Account:
     def create_customer_account(self, customer_service):
         
         print("\n===== CREATE CUSTOMER ACCOUNT =====")
@@ -29,7 +29,7 @@ class Admin(User):
 
         print(message)
 
-    #Create Service:
+    #2. Delete Customer Account:
     def delete_customer_account(self, customer_service):
         
         print("\n===== DELETE CUSTOMER ACCOUNT =====")
@@ -46,7 +46,7 @@ class Admin(User):
 
         print(message)
 
-    #Create Service:
+    #3. Modify Customer Information:
     def modify_customer_information(self, customer_service):
         
         print("\n===== MODIFY CUSTOMER INFORMATION =====")
@@ -73,7 +73,7 @@ class Admin(User):
 
         print(message)
 
-    #Create Service:
+    #4. View Customer Account Information:
     def view_customer_account_info(self, customer_service):
         
         print("\n===== VIEW CUSTOMER ACCOUNT INFORMATION =====")
@@ -92,7 +92,7 @@ class Admin(User):
             print(f"Account Balance: ${float(customer['account_balance']):.2f}")
             print(f"Account Status: {customer['account_status']}")
 
-    #Create Service:
+    #5. Change Customer Account Status:
     def change_customer_account_status(self, customer_service):
         
         print("\n===== CHANGE CUSTOMER ACCOUNT STATUS =====")
@@ -105,7 +105,7 @@ class Admin(User):
 
         print(message)
 
-    #Create Service:
+    #6. View Customer Transaction History:
     def view_customer_transactions(self, transaction_service):
         
         print("\n===== VIEW CUSTOMER TRANSACTION HISTORY =====")
@@ -119,7 +119,7 @@ class Admin(User):
         if success:
             self._display_transactions(history)
 
-    #Create Service:
+    #7. View Transaction Logs:
     def view_transaction_logs(self, transaction_service):
         print("\n===== VIEW TRANSACTION LOGS =====")
 
@@ -173,6 +173,7 @@ class Admin(User):
             else:
                 print("ERROR! Invalid option. Please enter a number from 1 to 8.")
 
+    @staticmethod
     def _display_transactions(transactions):
         
         if not transactions:

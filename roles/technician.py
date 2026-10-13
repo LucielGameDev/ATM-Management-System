@@ -5,7 +5,7 @@ class Technician(User):
     def __init__(self, user_id, username, password):
         super().__init__(user_id, username, password)
 
-    #Create Service:
+    #1. View ATM Health:
     def view_atm_health(self, atm_service):
         
         print("\n===== VIEW ATM HEALTH =====")
@@ -25,7 +25,7 @@ class Technician(User):
             print(f"Scheduled Maintenance Date: {report['scheduled_maintenance_date']}")
             print(f"Cash Level: ${float(report['cash_level']):.2f}")
 
-    #Create Service:
+    #2. Schedule ATM Maintenance:
     def schedule_atm_maintenance(self, atm_service):
         
         print("\n===== SCHEDULE ATM MAINTENANCE =====")
@@ -37,7 +37,7 @@ class Technician(User):
 
         print(message)
 
-    #Create Service:
+    #3. Restart ATM Software:
     def restart_atm_software(self, atm_service):
         
         print("\n===== RESTART ATM SOFTWARE =====")
@@ -54,7 +54,7 @@ class Technician(User):
 
         print(message)
 
-    #Create Service:
+    #4. Update ATM Software:
     def update_atm_software(self, atm_service):
         
         print("\n===== UPDATE ATM SOFTWARE =====")
@@ -66,7 +66,7 @@ class Technician(User):
 
         print(message)
 
-    #Create Service:
+    #5. Check ATM Cash Levels:
     def check_atm_cash_levels(self, atm_service):
         
         print("\n===== CHECK ATM CASH LEVELS =====")
@@ -80,7 +80,7 @@ class Technician(User):
         if success:
             print(f"Current cash level: ${float(cash_level):.2f}")
 
-    #Create Service:
+    #6. Refill ATM Cash:
     def refill_atm_cash(self, atm_service):
         
         print("\n===== REFILL ATM CASH =====")

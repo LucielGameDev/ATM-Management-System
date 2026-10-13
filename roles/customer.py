@@ -10,7 +10,7 @@ class Customer(User):
         self.account_balance = account_balance
         self.account_status = account_status
 
-    #Create Service:
+    #1. Balance Inquiry:
     def balance_inquiry(self, customer_service):
         
         success, message, balance = (customer_service.balance_inquiry(self.user_id))
@@ -20,7 +20,7 @@ class Customer(User):
         if success:
             print(f"Current balance: ${balance:.2f}")
 
-    #Create Service:
+    #2. Withdrawal:
     def withdrawal(self, transaction_service):
         
         amount = input("Enter withdrawal amount: ").strip()
@@ -29,7 +29,7 @@ class Customer(User):
 
         print(message)
 
-    #Create Service:
+    #3. Deposit:
     def deposit(self, transaction_service):
         
         amount = input("Enter deposit amount: ").strip()
@@ -38,7 +38,7 @@ class Customer(User):
 
         print(message)
 
-    #Create Service:
+    #4. Password Change:
     def change_customer_password(self, customer_service):
         
         current_password = input("Enter current password: ")
@@ -51,7 +51,7 @@ class Customer(User):
         if success:
             self.password = new_password
 
-    #Create Service:
+    #5. Transfer Funds:
     def transfer_funds(self, transaction_service):
         
         receiver_account_number = input("Enter receiver's account number: ").strip()

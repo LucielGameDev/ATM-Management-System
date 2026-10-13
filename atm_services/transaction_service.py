@@ -1,4 +1,5 @@
 from datetime import datetime
+import math
 
 class TransactionService:
 
@@ -7,9 +8,16 @@ class TransactionService:
 
     #Customer Menu (2. Withdrawal):
     def withdraw(self, account_number, amount):
-        
-        if amount is None or amount <= 0:
-            return (False, "ERROR! Withdrawal amount must be a valid number greater than zero.")
+
+        #Validate the amount type:
+        try:
+            amount = float(amount)
+        except (ValueError, TypeError):
+            return (False, "ERROR! Amount must be of type float.")
+
+        #Check if the amount is a finite number and greater than zero:
+        if not math.isfinite(amount) or amount <= 0:
+            return False, "ERROR! Amount must be a valid number greater than zero."
 
         customer = self._find_customer(account_number)
 
@@ -39,13 +47,11 @@ class TransactionService:
         try:
             self.data_manager.save_customers()
 
-            self._record_transactions([
-                {
-                    "transaction_type": "Withdrawal",
-                    "account_number": customer["account_number"],
-                    "amount": amount
-                }
-            ])
+            self._record_transactions(
+                transaction_type="Withdrawal",
+                account_number=customer["account_number"],
+                amount=amount
+            )
         except OSError:
             #Restore the original balance if saving fails:
             customer["account_balance"] = old_balance
@@ -63,9 +69,16 @@ class TransactionService:
     
     #Customer Menu (3. Deposit):
     def deposit(self, account_number, amount):
-        
-        if amount is None or amount <= 0:
-            return (False, "ERROR! Deposit amount must be a valid number greater than zero.")
+
+        #Validate the amount type:
+        try:
+            amount = float(amount)
+        except (ValueError, TypeError):
+            return (False, "ERROR! Amount must be of type float.")
+
+        #Check if the amount is a finite number and greater than zero:
+        if not math.isfinite(amount) or amount <= 0:
+            return (False, "ERROR! Amount must be a valid number greater than zero.")
 
         customer = self._find_customer(account_number)
 
@@ -92,13 +105,11 @@ class TransactionService:
         try:
             self.data_manager.save_customers()
 
-            self._record_transactions([
-                {
-                    "transaction_type": "Deposit",
-                    "account_number": customer["account_number"],
-                    "amount": amount
-                }
-            ])
+            self._record_transactions(
+                transaction_type = "Deposit",
+                account_number = customer["account_number"],
+                amount = amount
+            )
         except OSError:
             #Restore the original balance if saving fails:
             customer["account_balance"] = old_balance
@@ -116,8 +127,16 @@ class TransactionService:
 
     #Customer Menu (5. Transfer Funds):
     def transfer_funds(self, sender_account_number, receiver_account_number, amount):
-        if amount is None or amount <= 0:
-            return (False, "ERROR! Transfer amount must be a valid number greater than zero.")
+        
+        #Validate the amount type:
+        try:
+            amount = float(amount)
+        except (ValueError, TypeError):
+            return (False, "ERROR! Amount must be of type float.")
+
+        #Check if the amount is a finite number and greater than zero:
+        if not math.isfinite(amount) or amount <= 0:
+            return False, "ERROR! Amount must be a valid number greater than zero."
 
         if sender_account_number == receiver_account_number:
             return (False, "ERROR! Cannot transfer money to the same account.")
@@ -166,24 +185,25 @@ class TransactionService:
         #Save the updated customers data to the file:
         try:
             self.data_manager.save_customers()
-
-            #Record both sides of the transfer:
-            self._record_transactions([
-                {
-                    "transaction_type": "Transfer",
-                    "account_number": sender["account_number"],
-                    "amount": amount,
-                    "related_account": receiver["account_number"],
-                    "timestamp": timestamp
-                },
-                {
-                    "transaction_type": "Transfer",
-                    "account_number": receiver["account_number"],
-                    "amount": amount,
-                    "related_account": sender["account_number"],
-                    "timestamp": timestamp
-                }
-            ])
+            
+            #Record the sender's transaction:
+            self._record_transactions(
+                transaction_type = "Transfer",
+                account_number = sender["account_number"],
+                amount = amount,
+                related_account = receiver["account_number"],
+                timestamp = timestamp
+            )
+            
+            #Record the receiver's transaction:
+            self._record_transactions(
+                transaction_type = "Transfer",
+                account_number = receiver["account_number"],
+                amount = amount,
+                related_account = sender["account_number"],
+                timestamp = timestamp
+            )
+            
         except OSError:
             #Restore both balances if saving fails:
             sender["account_balance"] = old_sender_balance
@@ -270,7 +290,7 @@ class TransactionService:
 
 
     #Records Transactions:
-    def _record_transaction(self, transaction_type, account_number, amount, related_account=None, timestamp=None):
+    def _record_transactions(self, transaction_type, account_number, amount, related_account=None, timestamp=None):
         
         #Generate a unique transaction ID for the new transaction:
         transaction_id = self._generate_transaction_id()
