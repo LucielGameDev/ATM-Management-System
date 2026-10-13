@@ -1,3 +1,4 @@
+from getpass import getpass
 from data_manager import DataManager
 
 from atm_services.authentication import AuthenticationService
@@ -48,7 +49,7 @@ def login_customer(authentication_service, customer_service, transaction_service
     print("\n===== Customer Login =====")
 
     user_id = input("Enter User ID: ").strip()
-    password = input("Enter Password: ")
+    password = getpass("Enter Password: ")
 
     success, message, customer = (authentication_service.authenticate_customer(user_id, password))
 
@@ -62,7 +63,7 @@ def login_admin(authentication_service, customer_service, transaction_service):
     print("\n===== Admin Login =====")
 
     user_id = input("Enter User ID: ").strip()
-    password = input("Enter Password: ")
+    password = getpass("Enter Password: ")
 
     success, message, admin = (authentication_service.authenticate_admin(user_id, password))
 
@@ -76,7 +77,7 @@ def login_technician(authentication_service, atm_service):
     print("\n===== Technician Login =====")
 
     user_id = input("Enter User ID: ").strip()
-    password = input("Enter Password: ")
+    password = getpass("Enter Password: ")
 
     success, message, technician = (authentication_service.authenticate_technician(user_id, password))
 

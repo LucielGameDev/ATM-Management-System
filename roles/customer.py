@@ -1,4 +1,5 @@
 from roles.user import User
+from getpass import getpass
 
 class Customer(User):
 
@@ -41,8 +42,8 @@ class Customer(User):
     #4. Password Change:
     def change_customer_password(self, customer_service):
         
-        current_password = input("Enter current password: ")
-        new_password = input("Enter new password: ")
+        current_password = getpass("Enter current password: ")
+        new_password = getpass("Enter new password: ")
 
         success, message = (customer_service.change_customer_password(self.user_id, current_password, new_password))
 

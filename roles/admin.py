@@ -1,4 +1,5 @@
 from roles.user import User
+from getpass import getpass
 
 class Admin(User):
 
@@ -12,7 +13,7 @@ class Admin(User):
 
         user_id = input("Enter new customer user ID: ").strip()
         username = input("Enter username: ").strip()
-        password = input("Enter password: ")
+        password = getpass("Enter password: ")
         account_number = input("Enter account number: ").strip()
         initial_balance = input("Enter initial balance (press Enter for 0): ").strip()
 
@@ -56,7 +57,7 @@ class Admin(User):
         print("Leave a field empty if you do not want to change it.")
 
         new_username = input("Enter customer new username: ").strip()
-        new_password = input("Enter customer new password: ")
+        new_password = getpass("Enter customer new password: ")
 
         if not new_username and not new_password:
             print("ERROR! No changes were entered.")
