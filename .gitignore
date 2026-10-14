@@ -14,18 +14,14 @@ venv/
 logs/
 *.log
 
-# Runtime ATM data
-data/users.txt
-data/accounts.txt
-data/transactions.txt
-data/audit_log.txt
-
 # OS
 .DS_Store
 Thumbs.db
 
 # Data files
-data/atm_config.txt
+data/users.txt
 data/costumers.txt
 data/technicians.txt
 data/admins.txt
+data/transactions.txt
+data/atm_config.txt
