@@ -1,3 +1,5 @@
+from hashing_passwords import hash_password, verify_password
+
 class CustomerService:
 
     def __init__(self, data_manager):
@@ -21,7 +23,7 @@ class CustomerService:
         if customer is None:
             return (False, "ERROR! Customer not found.")
         
-        if customer["password"] != current_password:
+        if not verify_password(current_password, customer["password"]):
             return (False, "ERROR! Current password is incorrect.")
         
         if not new_password:
@@ -33,11 +35,14 @@ class CustomerService:
         if new_password == current_password:
             return (False, "ERROR! New password must differ from the current password.")
 
+        #Hash the new password:
+        new_password_hash = hash_password(new_password)
+
         #Keep the original password in case saving fails:
         old_password = customer["password"]
 
         #Update the password in memory:
-        customer["password"] = new_password
+        customer["password"] = new_password_hash
 
         #Save the updated password to the file:
         try:
@@ -52,15 +57,15 @@ class CustomerService:
     #Admin Menu (1. Create Customer Account):
     def create_customer_account(self, user_id, username, password, account_number, account_balance):
         
+        #Validate the required information:
+        if not all([user_id, username, password, account_number]):
+           return (False, "ERROR! All customer details are required.")
+        
         if any(customer["user_id"] == user_id for customer in self.data_manager.customers):
             return (False, "ERROR! User ID already exists.")
 
         if any(customer["account_number"] == account_number for customer in self.data_manager.customers):
             return (False, "ERROR! Account number already exists.")
-
-        #Validate the required information:
-        if not all([user_id, username, password, account_number]):
-            return (False, "ERROR! All customer details are required.")
 
         #Convert account balance to float and validate it:
         try:
@@ -71,11 +76,14 @@ class CustomerService:
         if balance < 0:
             return (False, "ERROR! Account balance cannot be negative.")
 
+        #Hash the entered password:
+        password_hash = hash_password(password)
+        
         #Create the customer record:
         customer = {
             "user_id": user_id,
             "username": username,
-            "password": password,
+            "password": password_hash,
             "account_number": account_number,
             "account_balance": f"{balance:.2f}",
             "account_status": "Active"
@@ -144,7 +152,8 @@ class CustomerService:
             if any(character.isspace() for character in new_password):
                 return (False, "ERROR! Password cannot contain spaces.")
 
-            updates["password"] = new_password
+            #Hash the new password before storing it:
+            updates["password"] = hash_password(new_password)
 
         #Check if there are any changes:
         if not updates:

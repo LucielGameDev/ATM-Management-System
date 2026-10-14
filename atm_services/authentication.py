@@ -1,6 +1,7 @@
 from roles.customer import Customer
 from roles.admin import Admin
 from roles.technician import Technician
+from hashing_passwords import verify_password
 
 class AuthenticationService:
 
@@ -14,7 +15,7 @@ class AuthenticationService:
 
             if customer_data["user_id"] == user_id:
 
-                if customer_data["password"] != password:
+                if not verify_password(password, customer_data["password"]):
                     return (False, "ERROR! Incorrect password.", None)
 
                 if customer_data["account_status"].lower() == "frozen":
@@ -40,7 +41,7 @@ class AuthenticationService:
 
             if admin_data["user_id"] == user_id:
 
-                if admin_data["password"] != password:
+                if not verify_password(password, admin_data["password"]):
                     return (False, "ERROR! Incorrect password.", None)
 
                 admin = Admin(
@@ -60,7 +61,7 @@ class AuthenticationService:
 
             if technician_data["user_id"] == user_id:
 
-                if technician_data["password"] != password:
+                if not verify_password(password, technician_data["password"]):
                     return (False, "ERROR! Incorrect password.", None)
 
                 technician = Technician(
