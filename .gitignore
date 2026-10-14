@@ -20,7 +20,7 @@ Thumbs.db
 
 # Data files
 data/users.txt
-data/costumers.txt
+data/customers.txt
 data/technicians.txt
 data/admins.txt
 data/transactions.txt
